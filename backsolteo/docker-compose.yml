@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+ solteo_docker:
+    container_name: solteo_container
+    build: .
+    depends_on:
+      - postgres_docker
+    env_file:
+      - .env
+    ports:
+      - 5000:5000
+    volumes:
+      - /srv/app
+    restart: always
+    working_dir: /srv/app/
+    entrypoint: /bin/bash -ec "flask db init && flask db migrate && flask db upgrade && flask run --host=0.0.0.0"
+    tty: true
+    networks:
+      - solteo_network
+
+ postgres_docker:
+    image: postgres:latest
+    container_name: postgres_container
+    restart: always
+    hostname: postgres
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    volumes:
+        - /var/lib/postgresql #pgdata:    a replacer devant /var et remettre volumes
+    networks:
+      - solteo_network
+
+networks:
+  solteo_network:
+    name: solteo_network
+    driver: bridge
