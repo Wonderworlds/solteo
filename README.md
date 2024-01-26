@@ -1,7 +1,5 @@
 # Solteo technical exercise
 
-Create a fullstack web application to display a leaderboard of surgeons
-
 ## Deployment
 
 To deploy this project run
@@ -23,7 +21,7 @@ make
 Local deployment
 
 ```bash
-replace the value in .env for to connect to your database
+replace the value in .env to connect the database
 flask db init
 flask db migrate
 flask db upgrade
